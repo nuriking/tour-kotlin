@@ -47,19 +47,22 @@ class MainActivity : BaseActivity(), IMain, MainAdapter.onCurrentItemAction {
     }
 
     override fun fillFlight(flights: List<Flight>) {
-        val adapterD = FlightAdapter(this, flights)
-        val builder = AlertDialog.Builder(this)
-        builder.setAdapter(adapterD) { _, which ->
-            val flight = adapterD.getItem(which)
+        val builderSingle = AlertDialog.Builder(this)
+        builderSingle.setNegativeButton("cancel") { dialog, _ -> dialog.dismiss() }
+
+        val arrayAdapter = FlightAdapter(this, R.layout.item_flight, flights)
+
+        builderSingle.setAdapter(arrayAdapter) { dialog, which ->
+            val flight = arrayAdapter.getItem(which)
             val builderInner = AlertDialog.Builder(this)
             builderInner.setMessage(flight!!.airline.name)
-            builderInner.setTitle(flight.price)
+            builderInner.setTitle("Your Selected Item is")
             builderInner.setPositiveButton(
                 "Ok"
-            ) { dialog, which -> dialog.dismiss() }
+            ) { dialog, _ -> dialog.dismiss() }
             builderInner.show()
         }
-        builder.create().show()
+        builderSingle.show()
     }
 
     override fun onItemClick(hotel: Hotel) {
