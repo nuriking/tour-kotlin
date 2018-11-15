@@ -62,6 +62,7 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
 
 //others
+    implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation  'com.android.support:multidex:1.0.3'
     implementation 'com.google.code.gson:gson:2.8.2'

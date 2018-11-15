@@ -30,23 +30,23 @@ class MainPresenter : BasePresenter<IMain>() {
     fun getHotelList() {
         model.getHotelList()
             .doOnSubscribe { getView().onShowLoading() }
+            .doAfterSuccess {
+                getFlightList()
+                getAirlineList()
+            }
             .doFinally { getView().onHideLoading() }
-//            .doAfterSuccess { getFlightList() }
             .subscribe(this::onSuccessLoadHotelList, this::onError)
     }
 
     private fun onSuccessLoadHotelList(hotels: Hotels) {
         this.hotels = hotels.hotels
         getView().fillHotel(this.hotels)
-        getFlightList()
-
     }
 
     @SuppressLint("CheckResult")
     fun getFlightList() {
         model.getFlightList()
             .doOnSubscribe { getView().onShowLoading() }
-            .doAfterSuccess { getAirlineList() }
             .doFinally { getView().onHideLoading() }
             .subscribe(this::onSuccessLoadFlightList, this::onError)
     }
@@ -83,11 +83,21 @@ class MainPresenter : BasePresenter<IMain>() {
         }
         for (airLine in this.airlines) {
             for (needFlight in needFlights) {
-                if(airLine.id == needFlight.companyId) {
+                if (airLine.id == needFlight.companyId) {
                     needFlight.airline = airLine
                 }
             }
         }
-        getView().fillFlight(needFlights)
+        getView().fillFlight(needFlights, hotel)
+    }
+
+    fun textChangedSearch(text: CharSequence) {
+        val newHotels = ArrayList<Hotel>()
+        for (hotel in this.hotels) {
+            if (hotel.name.toLowerCase().contains(text.toString().toLowerCase())) {
+                newHotels.add(hotel)
+            }
+        }
+        getView().fillHotel(newHotels)
     }
 }

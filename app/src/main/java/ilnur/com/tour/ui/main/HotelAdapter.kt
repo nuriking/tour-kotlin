@@ -9,8 +9,8 @@ import ilnur.com.tour.R
 import ilnur.com.tour.model.Hotel
 import kotlinx.android.synthetic.main.item.view.*
 
-class MainAdapter(val action: onCurrentItemAction, var hotels: List<Hotel>) :
-    RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class HotelAdapter(val action: onCurrentItemAction, var hotels: List<Hotel>) :
+    RecyclerView.Adapter<HotelAdapter.ViewHolder>() {
 
     fun setData(hotels: List<Hotel>) {
         this.hotels = hotels
@@ -27,9 +27,9 @@ class MainAdapter(val action: onCurrentItemAction, var hotels: List<Hotel>) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.hotelTitleTextView.text = "Hotel \"".plus(hotels[position].name).plus("\"")
-        holder.countVariantAirlineTextView.text = hotels[position].flights.size.toString()
-        holder.minCostTextView.text = hotels[position].price.toString()
+        holder.hotelTitleTextView.text = "Отель \"".plus(hotels[position].name).plus("\"")
+        holder.countVariantAirlineTextView.text = hotels[position].flights.size.toString().plus(" варианта перелета")
+        holder.minCostTextView.text = "от ".plus(hotels[position].price.toString()).plus("р")
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
