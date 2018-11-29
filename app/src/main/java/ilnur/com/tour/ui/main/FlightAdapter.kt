@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import ilnur.com.tour.R
+import android.widget.CheckedTextView
 import ilnur.com.tour.model.Flight
 import android.widget.TextView
 import kotlinx.android.synthetic.main.item_flight.view.*
@@ -15,14 +15,14 @@ class FlightAdapter(context: Context, @LayoutRes private val layoutResource: Int
     ArrayAdapter<Flight>(context, layoutResource, flights) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var holder: ViewHolder
-        var retView: View
+        val holder: ViewHolder
+        val retView: View
         val flight = getItem(position)
         if (convertView == null) {
             retView = LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
             holder = ViewHolder(retView)
             holder.airlineNameTextView.text = flight!!.airline.name
-            holder.airlinePriceTextView.text = flight.price.toString()
+            holder.airlinePriceTextView.text = flight.price.toString().plus("р")
             retView.tag = holder
         } else {
             holder = convertView.tag as ViewHolder
@@ -36,7 +36,7 @@ class FlightAdapter(context: Context, @LayoutRes private val layoutResource: Int
     }
 
     internal class ViewHolder(view: View) {
-        var airlineNameTextView: TextView = view.tvName
-        var airlinePriceTextView: TextView= view.tvPrice
+        var airlineNameTextView: CheckedTextView = view.tvName
+        var airlinePriceTextView: TextView = view.tvPrice
     }
 }

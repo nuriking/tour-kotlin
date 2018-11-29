@@ -7,5 +7,5 @@ import ilnur.com.tour.ui.IBaseView
 interface IMain : IBaseView {
     fun fillHotel(hotels: List<Hotel>)
 
-    fun fillFlight(flights: List<Flight>)
+    fun fillFlight(flights: List<Flight>, hotel: Hotel)
 }
